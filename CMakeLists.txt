@@ -1,19 +1,20 @@
-cmake_minimum_required(VERSION 3.13)
-
+cmake_minimum_required(VERSION 3.30)
 project(http-server-starter-cpp)
 
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*.hpp)
-
-set(CMAKE_CXX_STANDARD 23) # Enable the C++23 standard
+set(CMAKE_CXX_STANDARD 23)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 find_package(Threads REQUIRED)
 find_package(ZLIB REQUIRED)
 
-add_executable(server ${SOURCE_FILES})
-
+# Main executable
+add_executable(server src/server.cpp)
 target_link_libraries(server PRIVATE Threads::Threads ZLIB::ZLIB)
 
-add_subdirectory(src/tests)
-add_dependencies(server main_test)
-message(STATUS "Including tests from tests/CMakeLists.txt")
+# Optional testing
+option(BUILD_TESTING "Enable tests" ON)
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(tests)
+    add_dependencies(server main_test)
+endif()
