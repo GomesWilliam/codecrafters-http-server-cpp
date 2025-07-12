@@ -17,8 +17,8 @@ and more.
 # Passing the first stage
 
 The entry point for your HTTP server implementation is in `src/server.cpp`.
-Study and uncomment the relevant code, and push your changes to pass the first
-stage:
+[Study and uncomment the relevant code, and push your changes to pass the first
+]()stage:
 
 ```sh
 git commit -am "pass 1st stage" # any msg

@@ -13,3 +13,7 @@ find_package(ZLIB REQUIRED)
 add_executable(server ${SOURCE_FILES})
 
 target_link_libraries(server PRIVATE Threads::Threads ZLIB::ZLIB)
+
+add_subdirectory(src/tests)
+add_dependencies(server main_test)
+message(STATUS "Including tests from tests/CMakeLists.txt")
