@@ -1,0 +1,6 @@
+{
+  "cmake.useCMakePresets": "always",
+  "cmake.configurePreset": "ninja-release",
+  "cmake.buildPreset": "build-ninja-release",
+  "cmake.testPreset": "test-ninja-release",
+}
