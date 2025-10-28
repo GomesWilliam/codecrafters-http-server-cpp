@@ -94,9 +94,5 @@ std::string GetHttpStatusLine(int status_code) {
 }
 
 std::string GetBasicStatusMessage() {
-  return "HTTP/1.1 200 OK\r\n"
-         "Content-Length: 13\r\n"
-         "Content-Type: text/plain\r\n"
-         "\r\n"
-         "Hello, world!";
+  return "HTTP/1.1 200 OK\r\n\r\n";
 }
