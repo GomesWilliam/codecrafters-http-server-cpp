@@ -3,4 +3,10 @@
   "cmake.configurePreset": "ninja-release",
   "cmake.buildPreset": "build-ninja-release",
   "cmake.testPreset": "test-ninja-release",
+  "files.associations": {
+    "cstdlib": "cpp"
+  },
+  "editor.formatOnSave": true,
+  "C_Cpp.clang_format_style": "file",
+  "C_Cpp.codeAnalysis.runAutomatically": true
 }

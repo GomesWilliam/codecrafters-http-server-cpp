@@ -1,0 +1,28 @@
+# .clang-format (recommended baseline)
+BasedOnStyle: Google
+Language: Cpp
+Standard: Cpp23
+
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 100
+
+BreakBeforeBraces: Attach
+SpaceBeforeParens: ControlStatements
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: false
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+IncludeBlocks: Regroup
+SortIncludes: true
+IncludeCategories:
+  - Regex: "^<.*>$" # std/system
+    Priority: 1
+  - Regex: '^"(src|include)/'
+    Priority: 2
+  - Regex: ".*" # third-party, local misc
+    Priority: 3

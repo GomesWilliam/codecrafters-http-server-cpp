@@ -1,0 +1,73 @@
+FormatStyle: file
+HeaderFilterRegex: "^(src|include)/"
+WarningsAsErrors: ""
+AnalyzeTemporaryDtors: false
+
+Checks: >
+  clang-analyzer-*,
+  bugprone-*,
+  performance-*,
+  readability-*,
+  modernize-*,
+  cppcoreguidelines-*,
+  portability-*,
+  llvm-include-order,
+  misc-include-cleaner,
+  readability-identifier-naming
+
+# -- naming rules ------------------------------------------------------------
+CheckOptions:
+  # ===== Types =====
+  - { key: readability-identifier-naming.TypeCase, value: CamelCase }
+  - { key: readability-identifier-naming.ClassCase, value: CamelCase }
+  - { key: readability-identifier-naming.StructCase, value: CamelCase }
+  - { key: readability-identifier-naming.EnumCase, value: CamelCase }
+  - { key: readability-identifier-naming.UnionCase, value: CamelCase }
+  - { key: readability-identifier-naming.TypeAliasCase, value: CamelCase }
+  - {
+      key: readability-identifier-naming.TemplateParameterCase,
+      value: CamelCase,
+    }
+
+  # ===== Functions / Methods =====
+  - { key: readability-identifier-naming.FunctionCase, value: camelBack }
+  - { key: readability-identifier-naming.MethodCase, value: camelBack }
+  - { key: readability-identifier-naming.NamespaceCase, value: lower_case }
+
+  # ===== Variables =====
+  - { key: readability-identifier-naming.VariableCase, value: camelBack }
+  - { key: readability-identifier-naming.MemberCase, value: camelBack }
+  - { key: readability-identifier-naming.PrivateMemberCase, value: camelBack }
+  - { key: readability-identifier-naming.ProtectedMemberCase, value: camelBack }
+  - { key: readability-identifier-naming.ParameterCase, value: camelBack }
+  - { key: readability-identifier-naming.LocalVariableCase, value: camelBack }
+
+  # ===== Constants (kPrefix + PascalCase) =====
+  - { key: readability-identifier-naming.ConstantCase, value: CamelCase }
+  - { key: readability-identifier-naming.ConstantPrefix, value: "k" }
+  - {
+      key: readability-identifier-naming.ConstexprVariableCase,
+      value: CamelCase,
+    }
+  - { key: readability-identifier-naming.ConstexprVariablePrefix, value: "k" }
+  - { key: readability-identifier-naming.EnumConstantCase, value: CamelCase }
+  - { key: readability-identifier-naming.EnumConstantPrefix, value: "k" }
+  - { key: readability-identifier-naming.GlobalConstantCase, value: CamelCase }
+  - { key: readability-identifier-naming.GlobalConstantPrefix, value: "k" }
+
+  # ===== Macros =====
+  - {
+      key: readability-identifier-naming.MacroDefinitionCase,
+      value: UPPER_CASE,
+    }
+
+  # ===== Include Order & Guards =====
+  # Require header guards that match the file path.
+  - { key: llvm-header-guard.HeaderFileExtensions, value: "h;hpp;hh" }
+  # Check for proper include order: C system, C++ system, project
+  - { key: llvm-include-order.IgnoreMainHeader, value: "false" }
+
+  # ===== Misc readability options =====
+  - { key: readability-magic-numbers.IgnoredIntegerValues, value: "0,1,2" }
+  - { key: modernize-use-auto.MinTypeNameLength, value: "5" }
+  - { key: modernize-use-nullptr.NullMacros, value: "NULL" }
