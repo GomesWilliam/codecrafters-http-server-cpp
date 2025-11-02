@@ -1,5 +1,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <request.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -8,8 +9,6 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-
-#include <request.h>
 
 // Function declarations
 std::string GetHttpStatusLine(int status_code);
@@ -65,7 +64,7 @@ int main(int argc, char **argv) {
   std::cout << "Waiting for a client to connect...\n";
 
   int client_fd = accept(server_fd, (struct sockaddr *)&client_addr,
-         (socklen_t *)&client_addr_len);
+                         (socklen_t *)&client_addr_len);
   if (client_fd < 0) {
     std::cerr << "Failed to accept client connection\n";
     return 1;
@@ -75,33 +74,32 @@ int main(int argc, char **argv) {
 
   std::string raw_request = ReadHttpRequest(client_fd);
 
-  if (raw_request.length() == 0) { 
+  if (raw_request.length() == 0) {
     std::cerr << "Failed to read from client\n";
     close(client_fd);
     close(server_fd);
     return 1;
   };
-  
+
   std::cout << "Received request:\n" << raw_request << std::endl;
 
   Request request;
-  
-  if(!request.ParseRequest(raw_request)){
+
+  if (!request.ParseRequest(raw_request)) {
     std::cerr << "Failed to parse request\n";
   }
 
-  //TODO: remove later
+  // TODO: remove later
   std::cout << "This is the path: " << request.GetPath() << "\n";
 
   int status_code;
-  if(request.GetPath() == "/"){
+  if (request.GetPath() == "/") {
     status_code = 200;
-  }
-  else{
+  } else {
     status_code = 404;
   }
 
-  //Send a basic HTTP response to the client
+  // Send a basic HTTP response to the client
   std::string http_response = GetHttpStatusLine(status_code);
   send(client_fd, http_response.c_str(), http_response.length(), 0);
   std::cout << "HTTP response sent\n";
@@ -125,28 +123,25 @@ std::string GetHttpStatusLine(int status_code) {
   }
 }
 
-std::string GetBasicStatusMessage() {
-  return "HTTP/1.1 200 OK\r\n\r\n";
-}
+std::string GetBasicStatusMessage() { return "HTTP/1.1 200 OK\r\n\r\n"; }
 
-
-//Simple http read, assuming no body in the request.
+// Simple http read, assuming no body in the request.
 std::string ReadHttpRequest(int client_fd) {
-    std::string request;
-    char buffer[4096];
-    ssize_t bytes_read;
-    
-    while ((bytes_read = read(client_fd, buffer, sizeof(buffer))) > 0) {
-        request.append(buffer, bytes_read);
-        
-        if (request.find("\r\n\r\n") != std::string::npos) {
-            break; 
-        }
-        
-        if (request.size() > 64 * 1024) {  // 64KB limit
-            throw std::runtime_error("HTTP request too large");
-        }
+  std::string request;
+  char buffer[4096];
+  ssize_t bytes_read;
+
+  while ((bytes_read = read(client_fd, buffer, sizeof(buffer))) > 0) {
+    request.append(buffer, bytes_read);
+
+    if (request.find("\r\n\r\n") != std::string::npos) {
+      break;
     }
-    
-    return request;
+
+    if (request.size() > 64 * 1024) {  // 64KB limit
+      throw std::runtime_error("HTTP request too large");
+    }
+  }
+
+  return request;
 }

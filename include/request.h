@@ -4,7 +4,7 @@
 #include <vector>
 
 class Request {
-public:
+ public:
   Request() = default;
 
   bool ParseRequest(const std::string &request);
@@ -14,16 +14,16 @@ public:
   std::string GetVersion() const;
   std::unordered_map<std::string, std::string> GetHeaders() const;
 
-protected:
-    bool IsValidMethod(const std::string &method);
+ protected:
+  bool IsValidMethod(const std::string &method);
 
-private:
+ private:
   std::string method_;
   std::string path_;
   std::string http_version_;
   std::unordered_map<std::string, std::string> headers_;
 
-    // All standard HTTP methods for validation
+  // All standard HTTP methods for validation
   static const std::vector<std::string> valid_methods_;
   static const std::string CRLF;
   static const std::string LF;

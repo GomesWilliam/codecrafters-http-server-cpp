@@ -2,10 +2,17 @@ cmake_minimum_required(VERSION 3.30)
 project(http-server-starter-cpp)
 
 # clang-tidy auto (honors your .clang-tidy)
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+find_program(CLANG_TIDY_EXE NAMES 
+    clang-tidy 
+    clang-tidy-17 
+    clang-tidy-16 
+    clang-tidy-15
+)
 if(CLANG_TIDY_EXE)
   message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
   set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE};-p=${CMAKE_BINARY_DIR}")
+else()
+  message(WARNING "clang-tidy not found!")
 endif()
 
 set(CMAKE_CXX_STANDARD 23)
