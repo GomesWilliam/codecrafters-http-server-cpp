@@ -1,65 +1,137 @@
 {
-  "version": 6,
-  "configurePresets": [
-    {
-      "name": "base",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      }
-    },
-    {
-      "name": "ninja-release",
-      "displayName": "Ninja + vcpkg (Release)",
-      "inherits": "base",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-ninja",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" },
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
-    },
-    {
-      "name": "ninja-debug",
-      "displayName": "Ninja + vcpkg (Debug)",
-      "inherits": "base",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-ninja-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
-    },
-    {
-      "name": "ninja-multi",
-      "displayName": "Ninja Multi-Config + vcpkg",
-      "inherits": "base",
-      "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build-ninja-multi",
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
-    },
-    {
-      "name": "vs2022-x64",
-      "displayName": "Visual Studio 2022 + vcpkg (x64)",
-      "inherits": "base",
-      "generator": "Visual Studio 17 2022",
-      "architecture": { "value": "x64" },
-      "binaryDir": "${sourceDir}/build-vs2022",
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
-    }
-  ],
-  
-  "buildPresets": [
-    { "name": "build-ninja-release", "configurePreset": "ninja-release" },
-    { "name": "build-ninja-debug",   "configurePreset": "ninja-debug" },
-    { "name": "build-ninja-multi-Rel", "configurePreset": "ninja-multi", "configuration": "Release" },
-    { "name": "build-ninja-multi-Dbg", "configurePreset": "ninja-multi", "configuration": "Debug" },
-    { "name": "build-vs2022-Rel", "configurePreset": "vs2022-x64", "configuration": "Release" },
-    { "name": "build-vs2022-Dbg", "configurePreset": "vs2022-x64", "configuration": "Debug" }
-  ],
-
-  "testPresets": [
-    { "name": "test-ninja-release", "configurePreset": "ninja-release" },
-    { "name": "test-ninja-debug",   "configurePreset": "ninja-debug" },
-    { "name": "test-ninja-multi-Rel", "configurePreset": "ninja-multi", "configuration": "Release" },
-    { "name": "test-ninja-multi-Dbg", "configurePreset": "ninja-multi", "configuration": "Debug" },
-    { "name": "test-vs2022-Rel", "configurePreset": "vs2022-x64", "configuration": "Release" },
-    { "name": "test-vs2022-Dbg", "configurePreset": "vs2022-x64", "configuration": "Debug" }
-  ]
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "ninja-release",
+            "displayName": "Ninja + vcpkg (Release)",
+            "inherits": "base",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-ninja",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "ninja-debug",
+            "displayName": "Ninja + vcpkg (Debug)",
+            "inherits": "base",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-ninja-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "ninja-multi",
+            "displayName": "Ninja Multi-Config + vcpkg",
+            "inherits": "base",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build-ninja-multi",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "vs2022-x64",
+            "displayName": "Visual Studio 2022 + vcpkg (x64)",
+            "inherits": "base",
+            "generator": "Visual Studio 17 2022",
+            "architecture": {
+                "value": "x64"
+            },
+            "binaryDir": "${sourceDir}/build-vs2022",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-ninja-release",
+            "configurePreset": "ninja-release"
+        },
+        {
+            "name": "build-ninja-debug",
+            "configurePreset": "ninja-debug"
+        },
+        {
+            "name": "build-ninja-multi-Rel",
+            "configurePreset": "ninja-multi",
+            "configuration": "Release"
+        },
+        {
+            "name": "build-ninja-multi-Dbg",
+            "configurePreset": "ninja-multi",
+            "configuration": "Debug"
+        },
+        {
+            "name": "build-vs2022-Rel",
+            "configurePreset": "vs2022-x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "build-vs2022-Dbg",
+            "configurePreset": "vs2022-x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "build",
+            "description": "",
+            "displayName": "",
+            "inherits": [
+                "build-ninja-release"
+            ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "test-ninja-release",
+            "configurePreset": "ninja-release"
+        },
+        {
+            "name": "test-ninja-debug",
+            "configurePreset": "ninja-debug"
+        },
+        {
+            "name": "test-ninja-multi-Rel",
+            "configurePreset": "ninja-multi",
+            "configuration": "Release"
+        },
+        {
+            "name": "test-ninja-multi-Dbg",
+            "configurePreset": "ninja-multi",
+            "configuration": "Debug"
+        },
+        {
+            "name": "test-vs2022-Rel",
+            "configurePreset": "vs2022-x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "test-vs2022-Dbg",
+            "configurePreset": "vs2022-x64",
+            "configuration": "Debug"
+        }
+    ]
 }
